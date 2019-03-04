@@ -5,7 +5,10 @@ Rails.application.routes.draw do
 
       resources :restaurants, only: [:index]
       resources :categories, only: [:index]
-      resources :users
+      resources :users, only: [:create]
+        post '/login', to: 'auth#create'
+        get '/profile', to: 'users#profile'
+
       resources :items do
         resources :comments
 

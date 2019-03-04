@@ -8,9 +8,10 @@ class Api::V1::CommentsController < ApplicationController
 
 
   def create
-
-
-    @comment = Comment.create(comment_params)
+    @user = current_user
+    commentObj = params.require(:comment).permit(:content, :item_id)
+    commentObj[:user_id] = @user.id
+    @comment = Comment.create(commentObj)
     render json: @comment
   end
 
@@ -19,6 +20,6 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def comment_params
-    params.permit(:content, :item_id, :user_id);
+    params.require(:comment).permit(:content, :item_id);
   end
 end

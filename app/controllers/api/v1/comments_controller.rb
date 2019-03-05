@@ -16,18 +16,29 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def update
-
+    @user = current_user
     @comment= Comment.find(params[:id])
-    @comment.content = params[:content]
-    @comment.save
-    render json: @comment
+
+    if @user.id == @comment.user_id
+      @comment.content = params[:content]
+      @comment.save
+      render json: @comment
+    else
+      render json: @comment
+    end
   end
 
   def destroy
+    @user = current_user
     @comment= Comment.find(params[:id])
-    @comment.destroy
-    @comments = Item.find(params[:item_id]).comments
-    render json: @comments
+
+    if @user.id == @comment.user_id
+      @comment.destroy
+      @comments = Item.find(params[:item_id]).comments
+      render json: @comments
+    else
+      render json: @comment
+    end
   end
 
 

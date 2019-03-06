@@ -1,5 +1,5 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :price, :likes, :dislikes
+  attributes :id, :name, :image, :description, :price, :likes, :dislikes
   belongs_to :restaurant
   belongs_to :category
   has_many :comments
